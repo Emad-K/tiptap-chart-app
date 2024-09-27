@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import ChartNode from './ChartNode';
 
 function App() {
+  const editor = useEditor({
+    extensions: [StarterKit, ChartNode],
+    content: '<p>Click the button to insert a chart.</p>',
+  });
+
+  const insertChart = () => {
+    editor.chain().focus().insertContent({ type: 'chart' }).run();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={insertChart}>Insert Chart</button>
+      <EditorContent editor={editor} />
     </div>
   );
 }
